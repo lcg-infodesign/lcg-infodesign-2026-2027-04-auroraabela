@@ -3,6 +3,8 @@ let backgroundColor = '#14171C';
 let data;
 let selectedRow; //x continuare a leggere le righe e non il rank
 
+let margin = 40;
+
 //disegno libro
 let xBook = 500;
 let yBook = 130;
@@ -32,22 +34,25 @@ async function setup() {
 function draw() {
 
     background(backgroundColor);
+    drawTitolo();
+    drawLegenda();
 
     let name = data.getString(selectedRow, "institution name");
     let continent = data.getString(selectedRow, "continent");
     let rank = data.getString(selectedRow, "ranking");
     let location = data.getString(selectedRow, "location full");
     let size = data.getString(selectedRow, "size");
-    let score = data.getString(selectedRow, "qs overall score");
+    let score = data.getNum(selectedRow, "qs overall score");
     let reputation = data.getNum(selectedRow, "academic reputation");
 
     
 
     drawCopertina(colorScale[continent]);
     drawPagina();
-    drawPaginaSx(rank, name, location, continent, size, score);
+    drawPaginaSx(rank, name, location, continent, size);
     drawSegnalibro(colorScale[continent]);
-    drawRettangoli(xBook + pageWidth + 30, yBook + 80, "Reputazione accademica", reputation, colorScale[continent]);
+    drawRettangoli(xBook + pageWidth + 30, yBook + pageHeight - 160, "Punteggio QS", score, colorScale[continent]);
+    drawRettangoli(xBook + pageWidth + 30, yBook + pageHeight - 75, "Reputazione accademica", reputation, colorScale[continent]);
     
 }
 
@@ -76,7 +81,7 @@ function drawCopertina(colore) {
 
 }
 
-function drawPaginaSx(rank, name, location, continent, size, score) {
+function drawPaginaSx(rank, name, location, continent, size) {
 
     fill("#14171C");
     textSize(40);
@@ -84,23 +89,19 @@ function drawPaginaSx(rank, name, location, continent, size, score) {
 
     fill("#14171C");
     textSize(16);
-    text(name, xBook + 30, yBook + 110);
+    text(name, xBook + 30, yBook + 92, pageWidth - 60); //ultimo valore x far finire il testo e andare a capo
 
     fill("#555555");
     textSize(15);
-    text(location, xBook + 30, yBook + 160);
+    text(location, xBook + 30, yBook + pageHeight - 80);
 
     fill("#555555");
     textSize(15);
-    text("Continente: " + continent, xBook + 30, yBook + 185);
+    text("Continente: " + continent, xBook + 30, yBook + pageHeight - 55);
 
     fill("#555555");
     textSize(15);
-    text("Dimensione campus: " + size, xBook + 30, yBook + 210);
-
-    fill("#14171C");
-    textSize(18);
-    text("Punteggio QS: " + score, xBook + 30, yBook + pageHeight - 40);
+    text("Dimensione campus: " + size, xBook + 30, yBook + pageHeight - 30);
 
 }
 
@@ -114,16 +115,16 @@ function drawSegnalibro(colore) {
 
 function drawRettangoli(x, y, etichetta, valore, colore) {
 
-    fill("#555555");
-    textSize(12);
+    fill("#14171C");
+    textSize(15);
     text(etichetta, x, y);
 
     let numRettangoli = 20;
     let numRettangoliPieni = valore / 5;
 
-    let larghezza = 5;
-    let altezza = 15;
-    let padding = 3;
+    let larghezza = 8;
+    let altezza = 35;
+    let padding = 4;
     let posX = x;
 
     for (let i = 0; i < numRettangoli; i++) {
@@ -132,15 +133,44 @@ function drawRettangoli(x, y, etichetta, valore, colore) {
             fill(colore);
         } else {
             noFill();
+            strokeWeight(1);
             stroke(colore);
         } 
-        rect(posX, y + 6, larghezza, altezza);
+        rect(posX, y + 12, larghezza, altezza);
         posX += larghezza + padding;
     }
 
     noStroke();
 
     fill("#14171C");
-    text(valore, posX + 6, y + 19);
+    textSize(18);
+    text(valore, posX + 8, y + 12 + altezza/2 + 6);
+
+}
+
+function drawTitolo() {
+
+    fill("#FFF6E6");
+    textSize(32);
+    text("L'università", margin, 75);
+    
+    fill("#8B909A");
+    textSize(16);
+    text("I punteggi e le sue caratteristiche", margin, 95);
+
+}
+
+function drawLegenda() {
+
+   let xLegenda = margin;
+   let yLegenda = yBook + 20;
+   
+   fill("#E8E6DF");
+   textSize(16);
+   text("All'interno del libro, consulta le caratteristiche", xLegenda, yLegenda);
+   text("dell'Università: rank, nome, Stato di appartenenza", xLegenda, yLegenda + 20);
+   text("e dimensione del campus.", xLegenda, yLegenda + 40);
+   text("Per punteggi e reputazione, ogni rettangolo pieno", xLegenda, yLegenda + 80);
+   text("indica 5 punti, fino ad un totale di 100.", xLegenda, yLegenda + 100);
 
 }

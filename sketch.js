@@ -281,16 +281,13 @@ function drawLegenda() {
   text("Ordine di ranking: dalla 1ª in alto a sinistra alla 100ª", xLegenda, yLegenda + 20);
 
     fill("#8B909A");
-  text("Passa il mouse su un libro per leggere i dettagli", xLegenda, yLegenda + 90);
+  text("Passa o clicca il mouse su un libro per leggere i dettagli", xLegenda, yLegenda + 90);
 }
 
 
 function mousePressed() {
 
-  if (hovered) {
-    let newURL = "detail.html?row=" + hoveredId; //sempre x il fatto che alcune hanno lo stesso rank
-    console.log(newURL);
-    window.location.href = newURL;
-  }
+  let newURL = "detail.html?row=" + hoveredId;
+  window.location.href = newURL;
 
 }
