@@ -287,7 +287,9 @@ function drawLegenda() {
 
 function mousePressed() {
 
-  let newURL = "detail.html?row=" + hoveredId;
+  if(hovered) { //non si schiaccia nel vuoto
+    let newURL = "detail.html?row=" + hoveredId;
   window.location.href = newURL;
+  }
 
 }

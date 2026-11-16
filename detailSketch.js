@@ -6,7 +6,7 @@ let selectedRow; //x continuare a leggere le righe e non il rank
 let margin = 40;
 
 //disegno libro
-let xBook = 500;
+let xBook = 600;
 let yBook = 130;
 let pageWidth = 360;
 let pageHeight = 480;
@@ -49,7 +49,7 @@ function draw() {
 
     drawCopertina(colorScale[continent]);
     drawPagina();
-    drawPaginaSx(rank, name, location, continent, size);
+    drawPaginaSx(rank, name, location, size);
     drawSegnalibro(colorScale[continent]);
     drawRettangoli(xBook + pageWidth + 30, yBook + pageHeight - 160, "Punteggio QS", score, colorScale[continent]);
     drawRettangoli(xBook + pageWidth + 30, yBook + pageHeight - 75, "Reputazione accademica", reputation, colorScale[continent]);
@@ -81,7 +81,7 @@ function drawCopertina(colore) {
 
 }
 
-function drawPaginaSx(rank, name, location, continent, size) {
+function drawPaginaSx(rank, name, location, size) {
 
     fill("#14171C");
     textSize(40);
@@ -93,11 +93,7 @@ function drawPaginaSx(rank, name, location, continent, size) {
 
     fill("#555555");
     textSize(15);
-    text(location, xBook + 30, yBook + pageHeight - 80);
-
-    fill("#555555");
-    textSize(15);
-    text("Continente: " + continent, xBook + 30, yBook + pageHeight - 55);
+    text(location, xBook + 30, yBook + pageHeight - 55);
 
     fill("#555555");
     textSize(15);
@@ -156,21 +152,78 @@ function drawTitolo() {
     
     fill("#8B909A");
     textSize(16);
-    text("I punteggi e le sue caratteristiche", margin, 95);
+    text("Caratteristiche e valutazioni", margin, 95);
 
 }
 
 function drawLegenda() {
 
-   let xLegenda = margin;
-   let yLegenda = yBook + 20;
+    let xLegenda = margin;
+    let yLegenda = yBook + 20;
    
-   fill("#E8E6DF");
-   textSize(16);
-   text("All'interno del libro, consulta le caratteristiche", xLegenda, yLegenda);
-   text("dell'Università: rank, nome, Stato di appartenenza", xLegenda, yLegenda + 20);
-   text("e dimensione del campus.", xLegenda, yLegenda + 40);
-   text("Per punteggi e reputazione, ogni rettangolo pieno", xLegenda, yLegenda + 80);
-   text("indica 5 punti, fino ad un totale di 100.", xLegenda, yLegenda + 100);
+    fill("#E8E6DF");
+    textSize(16);
+
+    text("Puoi consultare le caratteristiche dell'università selezionata all'interno del suo libro.", xLegenda, yLegenda, xLegenda + 350);
+    text("Per ognuna sono indicati: rank, nome, Stato di appartenenza, dimensione del campus.", xLegenda, yLegenda + 40, xLegenda + 350);
+    
+
+    text("Nella pagina accanto, i rettangoli colorati indicano 5 punti ottenuti nella valutazione QS e reputazione dell'ateneo:", xLegenda, yLegenda + 120, xLegenda + 350);
+
+    textSize(14);
+
+    fill("#8B909A");
+    rect(xLegenda, yLegenda + 190, 8, 26);
+
+    fill("#CFD3DA");
+    text("= 5 punti ottenuti", xLegenda + 20, yLegenda + 190 + 18);
+
+
+    noFill();
+    stroke("#8B909A");
+    strokeWeight(1);
+    rect(xLegenda, yLegenda + 230, 8, 26);
+
+    noStroke();
+    fill("#CFD3DA");
+    text("= 5 punti mancanti per ottenere 100 punti", xLegenda + 20, yLegenda + 230 + 18);
+
+
+    fill("#E8E6DF");
+    textSize(16);
+
+    text("Infine, il colore della copertina del libro e dei simboli indica il continente in cui si trova il campus:", xLegenda, yLegenda + 300, xLegenda + 350);
+
+    let yColori = yLegenda + 355;
+    textSize(14);
+
+    fill(colorScale['North America']);
+    rect(xLegenda, yColori, 14, 20);
+    fill("#CFD3DA");
+    text("North America", xLegenda + 24, yColori + 15);
+    yColori += 26;
+
+    fill(colorScale['Europe']);
+    rect(xLegenda, yColori, 14, 20);
+    fill("#CFD3DA");
+    text("Europe", xLegenda + 24, yColori + 15);
+    yColori += 26;
+
+    fill(colorScale['Asia']);
+    rect(xLegenda, yColori, 14, 20);
+    fill("#CFD3DA");
+    text("Asia", xLegenda + 24, yColori + 15);
+    yColori += 26;
+
+    fill(colorScale['Oceania']);
+    rect(xLegenda, yColori, 14, 20);
+    fill("#CFD3DA");
+    text("Oceania", xLegenda + 24, yColori + 15);
+    yColori += 26;
+
+    fill(colorScale['South America']);
+    rect(xLegenda, yColori, 14, 20);
+    fill("#CFD3DA");
+    text("South America", xLegenda + 24, yColori + 15);
 
 }
